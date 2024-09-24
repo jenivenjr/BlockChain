@@ -51,6 +51,11 @@ class Chain {
   }
 
   addBlock(certificate: Certificate) {
+    const existingCertificates = this.chain.filter(block => block.certificate.userID === certificate.userID && block.certificate.fileHash === certificate.fileHash);
+    if (existingCertificates.length > 0) {
+      console.log('Certificate already exists in the chain. Skipping addition.');
+      return;
+    }
     const newBlock = new Block(this.lastBlock.hash, certificate);
     this.mine(newBlock.nonce);
     this.chain.push(newBlock);
@@ -84,25 +89,5 @@ class Chain {
 // Instantiate the blockchain (Chain)
 const blockchain = Chain.instance;
 
-// Create certificates for different users
-const certificate1 = new Certificate('abc123', 'Blockchain Basics', 'user1', '2024-09-24');
-const certificate2 = new Certificate('abc123', 'Advanced Solidity', 'user1', '2024-09-25');
-const certificate3 = new Certificate('def456', 'Ethereum Smart Contracts', 'user2', '2024-09-26');
 
-// Add the certificates as blocks to the blockchain
-blockchain.addBlock(certificate1);
-blockchain.addBlock(certificate2);
-blockchain.addBlock(certificate3);
-
-// Verify certificates for user1 and user2
-const isVerifiedUser1Cert1 = blockchain.verifyCertificate('babc123', 'user1');
-const isVerifiedUser2Cert = blockchain.verifyCertificate('def456', 'user2');
-
-// Fetch all certificates for a specific user
-const user1Certificates = blockchain.getCertificatesByUserID('user1');
-
-// Outputs
-console.log('User 1 Certificate Verification:', isVerifiedUser1Cert1);
-console.log('User 2 Certificate Verification:', isVerifiedUser2Cert);
-console.log('Certificates for User 1:', user1Certificates);
 export { Chain };

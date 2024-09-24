@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 9000;
 app.use(bodyParser.json());
 
 // Route to add a new certificate
-app.post('/certificates', (req: { body: { fileHash: any; courseName: any; userID: any; date: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { error?: string; message?: string; }): void; new(): any; }; }; }) => {
+app.post('/certificates', (req:any, res: any) => {
   const { fileHash, courseName, userID, date } = req.body;
 
   if (!fileHash || !courseName || !userID || !date) {
@@ -44,7 +44,6 @@ app.post('/certificates/userID', (req:any, res:any) => {
   res.json(certificates);
 });
 
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
