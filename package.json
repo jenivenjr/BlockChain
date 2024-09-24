@@ -7,7 +7,7 @@
     "dev": "ts-node api/server.ts",
     "build": "tsc",
     "start": "node api/server.js",
-    "vercel-build":"hi"
+    "vercel-build":"echo hi"
   },
   "keywords": [],
   "author": "",
